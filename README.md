@@ -1,4 +1,4 @@
-### Welp!
+## Welp!
 
 # Project Description
 Welp is a humorous application which attempts to turn the function of Yelp scores and reccomendations on its head, by allowing users to search a given ZIP code to discover the worst-rated businesses in a given radius, search by category, and view details and reviews of each business.
