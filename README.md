@@ -1,68 +1,15 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Welp!
 
-## Available Scripts
+## Project Description
+Welp is a humorous application which attempts to turn the function of Yelp scores and reccomendations on its head, by allowing users to search a given ZIP code to discover the worst-rated businesses in a given radius, search by category, and view details and reviews of each business.
 
-In the project directory, you can run:
+## Technologies Used
+This project is primarily comprised of Javascript, consumes the Yelp Fusion API, utilizes the React library, React Router, and SCSS for styling.
 
-### `yarn start`
+## Features
+The user will be able to specify a ZIP code and a search radius in miles. The ZIP code will be converted into latitude/longitude, and the miles converted to meters for the purpose of the API query. THe user can either perform a blanket search by default, or route to a separate page to search by a list of provided categories.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The search will route to a new page which returns a list of paginated results, listing the poorest reviewed businesses first, paired with their accompanying Yelp score. After clicking on a business, the user will be routed to another page which displays certain bits of detailed information about that business, including reviews.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Milestones
+I plan to first build the landing page and ZIP code-based search feature, and leave the default radius for the time being. Following that, I will build out the paginated results page. Next will come the details page and routing, and lastly I will add the search radius feature and focus on styling, possibly implementing a UI library such as Google's Material UI.
