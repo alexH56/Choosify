@@ -2,9 +2,26 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const YELP_KEY = process.env.REACT_APP_YELP_API_KEY;
+const yelp = require('yelp-fusion');
 
-console.log(YELP_KEY);
+const apiKey = process.env.REACT_APP_YELP_API_KEY;
+
+console.log(apiKey);
+
+const searchRequest = {
+  term: 'Four Barrel Coffee',
+  location: 'san francisco, ca'
+};
+
+const client = yelp.client(apiKey);
+
+client.search(searchRequest).then(response => {
+  const firstResult = response.jsonBody.businesses[0];
+  const prettyJson = JSON.stringify(firstResult, null, 4);
+  console.log(prettyJson);
+}).catch(e => {
+  console.log(e);
+});
 
 function App () {
   return (
