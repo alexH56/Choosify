@@ -1,47 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
 
-const yelp = require('yelp-fusion');
+const yelp = require('./yelpFusionClient');
 
 const apiKey = process.env.REACT_APP_YELP_API_KEY;
 
-console.log(apiKey);
-
-const searchRequest = {
-  term: 'Four Barrel Coffee',
-  location: 'san francisco, ca'
-};
-
 const client = yelp.client(apiKey);
 
-client.search(searchRequest).then(response => {
-  const firstResult = response.jsonBody.businesses[0];
-  const prettyJson = JSON.stringify(firstResult, null, 4);
-  console.log(prettyJson);
-}).catch(e => {
-  console.log(e);
-});
+class App extends Component {
+  state = {
+    searchParameters: {
+      limit: 50,
+      offset: 0,
+      term: 'restaurants',
+      location: 'Louisville, KY',
+      sort_by: 'rating'
+    },
+    searchResults: [],
+  }
 
-function App () {
-  return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Welp!
-        </a>
-      </header>
-    </div>
-  );
+  getRestaurants = async () => {
+    let fullRestaurantList = [];
+    for (let i = 0; i < 2; i++) {
+      await client.search(this.state.searchParameters)
+      .then(res => {
+        fullRestaurantList = fullRestaurantList.concat(res.jsonBody.businesses);
+      
+        this.setState(prevState => ({
+          searchParameters: {
+            ...prevState.searchParameters,
+            offset: (prevState.searchParameters.offset + 20),
+          }
+        }))
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    }
+    this.setState({ searchResults: fullRestaurantList })
+    console.log(fullRestaurantList)
+  }
+
+  render () {
+    return (
+      <div className='App'>
+        <header className='App-header'>
+          <img src={logo} className='App-logo' alt='logo' />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <button onClick={() => this.getRestaurants()}>
+            Load stuff
+          </button>
+        </header>
+      </div>
+    );
+  }
 }
 
 export default App;
