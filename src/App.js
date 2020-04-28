@@ -19,11 +19,12 @@ class App extends Component {
       sort_by: 'rating'
     },
     searchResults: [],
+    top: 2
   }
 
   getRestaurants = async () => {
     let fullRestaurantList = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.state.top; i++) {
       await client.search(this.state.searchParameters)
       .then(res => {
         fullRestaurantList = fullRestaurantList.concat(res.jsonBody.businesses);
