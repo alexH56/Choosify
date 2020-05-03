@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import './App.css';
+import LocationForm from './Components/LocationForm';
+import Details from './Components/Details'
 
 const yelp = require('./yelpFusionClient');
 
@@ -15,29 +16,53 @@ class App extends Component {
       limit: 50,
       offset: 0,
       term: 'restaurants',
-      location: 'Louisville, KY',
-      sort_by: 'rating'
+      sort_by: 'rating',
+      location: ''      
     },
     searchResults: [],
-    top: 2
+    numOfPages: 2,
+    searchCounter: 0
   }
 
-  getRestaurants = async () => {
+  chooseRestaurant = async (location) => {     // sets 'location' in state to value of LocationForm
+  
+    this.setState(prevState => ({     // increments searchCounter to trigger "Details" update
+      searchParameters: {
+        ...prevState.searchParameters,
+        offset: (prevState.searchParameters.offset + 50),
+      }
+    }))
+
+    if(location !== this.state.searchParameters.location) {     // checks submission against current location to avoid unnecessary API calls
+      await this.setState(prevState => ({
+          searchParameters: {
+            ...prevState.searchParameters,
+            location: location,
+          }
+      }))
+      
+      this.getRestaurants();
+    }    
+  }
+
+  getRestaurants = async () => {      // retrieves list of restaurants accoring to search parameters in state
+    
     let fullRestaurantList = [];
-    for (let i = 0; i < this.state.top; i++) {
+
+    for (let i = 0; i < this.state.numOfPages; i++) {     // loops to accumulate desired number of restaurants from multiple API calls
       await client.search(this.state.searchParameters)
       .then(res => {
         fullRestaurantList = fullRestaurantList.concat(res.jsonBody.businesses);
-      
-        this.setState(prevState => ({
+
+        this.setState(prevState => ({     // increments offset by limit value to fetch next page of results
           searchParameters: {
             ...prevState.searchParameters,
-            offset: (prevState.searchParameters.offset + 20),
+            offset: (prevState.searchParameters.offset + 50),
           }
         }))
       })
-      .catch(e => {
-        console.log(e);
+      .catch(err => {
+        console.log(`Error: ${err}.`);
       });
     }
     this.setState({ searchResults: fullRestaurantList })
@@ -49,12 +74,21 @@ class App extends Component {
       <div className='App'>
         <header className='App-header'>
           <img src={logo} className='App-logo' alt='logo' />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <button onClick={() => this.getRestaurants()}>
-            Load stuff
-          </button>
+          
+          <LocationForm 
+          chooseRestaurant={this.chooseRestaurant} 
+          location={this.state.searchParameters.location}  
+          />
+
+          {(this.state.searchCounter > 1)?
+          
+            <Details 
+              searchResults={this.state.searchResults}
+              searchCounter={this.state.searchCounter}
+            />
+
+          :null}
+
         </header>
       </div>
     );
