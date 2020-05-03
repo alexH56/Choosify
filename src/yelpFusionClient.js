@@ -1,5 +1,3 @@
-'use strict';
-
 // NOTE:This is a local port of the "yelp-fusion" node module (https://github.com/tonybadguy/yelp-fusion#readme)
 
 // I encountered CORS errors due to restrictions of Yelp's API and, in order to circumvent them, prepended
