@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import loader from './loader.svg'
 import './App.css';
 import LocationForm from './Components/LocationForm';
 import Details from './Components/Details'
@@ -20,17 +21,21 @@ class App extends Component {
       location: ''      
     },
     searchResults: [],
+    info: '',
+    reviews: '',
     numOfPages: 2,
-    searchCounter: 0
+    searchCounter: 0,
+    isLoading: true
   }
 
   chooseRestaurant = async (location) => {     // sets 'location' in state to value of LocationForm
-  
+
+    this.loaderToggle(true);     // resets to display loading animation in "Details" component
+
+    this.clearDetails();      // enables component update to un-toggle the loader once "info" and "reviews" repopulate
+
     this.setState(prevState => ({     // increments searchCounter to trigger "Details" update
-      searchParameters: {
-        ...prevState.searchParameters,
-        offset: (prevState.searchParameters.offset + 50),
-      }
+      searchCounter: (prevState.searchCounter + 1),
     }))
 
     if(location !== this.state.searchParameters.location) {     // checks submission against current location to avoid unnecessary API calls
@@ -39,10 +44,13 @@ class App extends Component {
             ...prevState.searchParameters,
             location: location,
           }
-      }))
-      
+      }))      
+
       this.getRestaurants();
-    }    
+
+    } else{
+      this.pickRandom();
+    }
   }
 
   getRestaurants = async () => {      // retrieves list of restaurants accoring to search parameters in state
@@ -65,8 +73,63 @@ class App extends Component {
         console.log(`Error: ${err}.`);
       });
     }
-    this.setState({ searchResults: fullRestaurantList })
+    await this.setState({ searchResults: fullRestaurantList })
     console.log(fullRestaurantList)
+    this.pickRandom();
+  }
+
+  pickRandom = async () => {      // selects random restaurant from list
+    
+    let restaurantList = this.state.searchResults;
+    let theChosenOne = restaurantList[Math.floor(Math.random()*restaurantList.length)];
+    console.log(theChosenOne);
+    
+    this.getInfo(theChosenOne.id);
+    this.getReviews(theChosenOne.id);
+  }
+
+  getInfo = async (restaurantID) => {     // retrieves detailed data for restaurant chosen by "pickRandom()"
+    let info = [];
+    
+    await client.business(restaurantID)
+        .then(res => {
+          info = res.jsonBody;
+          this.setState({ info : info })
+        })
+        .catch(err => {
+        console.log(`Error: ${err}.`);
+        })
+    
+    console.log(info);
+  }
+
+  getReviews = async (restaurantID) => {      // retrieves detailed data for restaurant chosen by "pickRandom()"
+    let reviews = [];
+    await client.reviews(restaurantID)
+      .then(res => {
+        reviews = res.jsonBody.reviews;
+        this.setState({ reviews : reviews })
+      })
+      .catch(err => {
+      console.log(`Error: ${err}.`);
+      });
+
+    console.log(reviews);
+  }
+
+  clearDetails = () => {
+    this.setState({ info: ''});
+    this.setState({ reviews: '' });
+  }
+
+  loaderToggle = (boolean) => {
+    this.setState({ isLoading: boolean })
+  }
+
+  componentDidUpdate() {
+    if (this.state.info && this.state.reviews && this.state.isLoading) {
+      this.loaderToggle(false);
+    }
   }
 
   render () {
@@ -80,12 +143,12 @@ class App extends Component {
           location={this.state.searchParameters.location}  
           />
 
-          {(this.state.searchCounter > 1)?
-          
-            <Details 
-              searchResults={this.state.searchResults}
-              searchCounter={this.state.searchCounter}
-            />
+          {(this.state.searchCounter > 0)?
+            
+            <Details
+                searchCounter={this.state.searchCounter}
+                isLoading={this.state.isLoading}    
+              />  
 
           :null}
 
