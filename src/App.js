@@ -139,16 +139,18 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           
           <LocationForm 
-          chooseRestaurant={this.chooseRestaurant} 
-          location={this.state.searchParameters.location}  
+            chooseRestaurant={this.chooseRestaurant} 
+            location={this.state.searchParameters.location}  
           />
 
           {(this.state.searchCounter > 0)?
             
             <Details
-                searchCounter={this.state.searchCounter}
-                isLoading={this.state.isLoading}    
-              />  
+              searchCounter={this.state.searchCounter}
+              isLoading={this.state.isLoading}
+              info={this.state.info}
+              reviews={this.state.reviews}    
+            />  
 
           :null}
 
