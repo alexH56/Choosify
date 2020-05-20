@@ -1,7 +1,7 @@
 # Choosify
 
 ## Project Description
-Do you struggle choosing a place to eat? Do you and your significant other go around in circles when picking a restaurant, all the while insisting "anywhere is fine...except there"? Well worry no more! Chosify exists to solves your problem by taking your location, finding the top 100 restaurants near you, choosing one at random, and displaying its information to you. Trust in the app.
+Do you struggle choosing a place to eat? Do you and your significant other go around in circles when picking a restaurant, all the while insisting "anywhere is fine...except there"? Well worry no more! Choosify exists to solve your problem by taking your location, finding the top 100 restaurants near you, choosing one at random, and displaying its information to you. Trust in the app.
 
 ## Technologies Used
 This project is primarily comprised of Javascript, utilizes the React library, consumes the Yelp Fusion API, routes with React Router, and is styled by SCSS modules.
