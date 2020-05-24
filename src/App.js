@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import loader from './loader.svg'
 import './App.css';
-import LocationForm from './Components/LocationForm';
-import Details from './Components/Details'
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
+
+import Restaurant from './Components/Restaurant';
+import Home from './Components/Home';
+import LocationForm from './Components/LocationForm'
 
 const yelp = require('./yelpFusionClient');
 
-const apiKey = process.env.REACT_APP_YELP_API_KEY;
+const apiKey = 'aMWegcJjE6biL0jlEF51GR3bPyDpPYdYbko0VdeiQfOfRKK8kCOTTqx3DcyK2Ac9UGitFPHw_bUQgZuJE8ZQmeV3L1Fv2UGjxGSXK_zf3lf8lang3riirpVgq0dwXnYx';
 
 const client = yelp.client(apiKey);
 
@@ -23,38 +30,30 @@ class App extends Component {
     searchResults: [],
     info: '',
     reviews: '',
-    numOfPages: 2,
-    searchCounter: 0,
-    isLoading: true
+    numOfPages: 2
   }
 
-  chooseRestaurant = async (location) => {     // sets 'location' in state to value of LocationForm
-
-    this.loaderToggle(true);     // resets to display loading animation in "Details" component
-
-    this.clearDetails();      // enables component update to un-toggle the loader once "info" and "reviews" repopulate
-
-    this.setState(prevState => ({     // increments searchCounter to trigger "Details" update
-      searchCounter: (prevState.searchCounter + 1),
-    }))
-
+  getAllData = async (location) => {     // primary logic flow of app functionality
+    this.clearDetails();
     if(location !== this.state.searchParameters.location) {     // checks submission against current location to avoid unnecessary API calls
       await this.setState(prevState => ({
           searchParameters: {
             ...prevState.searchParameters,
-            location: location,
+            location: location
           }
-      }))      
-
-      this.getRestaurants();
-
-    } else{
-      this.pickRandom();
+      }))
+      
+      await this.getRestaurants();
+          
     }
+    
+    let chosenOne = await this.pickRandom();
+    this.getInfo(chosenOne.id);
+    this.getReviews(chosenOne.id);
   }
 
   getRestaurants = async () => {      // retrieves list of restaurants accoring to search parameters in state
-    
+
     let fullRestaurantList = [];
 
     for (let i = 0; i < this.state.numOfPages; i++) {     // loops to accumulate desired number of restaurants from multiple API calls
@@ -65,39 +64,34 @@ class App extends Component {
         this.setState(prevState => ({     // increments offset by limit value to fetch next page of results
           searchParameters: {
             ...prevState.searchParameters,
-            offset: (prevState.searchParameters.offset + 50),
+            offset: (prevState.searchParameters.offset + this.state.searchParameters.limit),
           }
         }))
       })
       .catch(err => {
-        console.log(`Error: ${err}.`);
+        console.log(`${err}`);
       });
     }
     await this.setState({ searchResults: fullRestaurantList })
     console.log(fullRestaurantList)
-    this.pickRandom();
   }
 
-  pickRandom = async () => {      // selects random restaurant from list
-    
+  pickRandom = async () => {      // selects random restaurant from list    
     let restaurantList = this.state.searchResults;
     let theChosenOne = restaurantList[Math.floor(Math.random()*restaurantList.length)];
     console.log(theChosenOne);
-    
-    this.getInfo(theChosenOne.id);
-    this.getReviews(theChosenOne.id);
+    return(theChosenOne)
   }
 
   getInfo = async (restaurantID) => {     // retrieves detailed data for restaurant chosen by "pickRandom()"
-    let info = [];
-    
+    let info = [];    
     await client.business(restaurantID)
         .then(res => {
           info = res.jsonBody;
           this.setState({ info : info })
         })
         .catch(err => {
-        console.log(`Error: ${err}.`);
+        console.log(`${err}`);
         })
     
     console.log(info);
@@ -111,51 +105,60 @@ class App extends Component {
         this.setState({ reviews : reviews })
       })
       .catch(err => {
-      console.log(`Error: ${err}.`);
+      console.log(`${err}`);
       });
 
     console.log(reviews);
-  }
+  }  
 
-  clearDetails = () => {
+  clearDetails = () => {      // empties state to reset loader animation
     this.setState({ info: ''});
     this.setState({ reviews: '' });
   }
 
-  loaderToggle = (boolean) => {
-    this.setState({ isLoading: boolean })
-  }
-
-  componentDidUpdate() {
-    if (this.state.info && this.state.reviews && this.state.isLoading) {
-      this.loaderToggle(false);
-    }
-  }
-
   render () {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          
-          <LocationForm 
-            chooseRestaurant={this.chooseRestaurant} 
-            location={this.state.searchParameters.location}  
-          />
-
-          {(this.state.searchCounter > 0)?
+      <Router>
+        <div className='App'>
+          <header className='App-header'>
+            <LocationForm
+              userLocation={this.state.searchParameters.location}
+              getAllData={this.getAllData} 
+            />
+          </header>
+       
+          {this.state.searchParameters.location ?
+              <Redirect to='/restaurant' />
+            :
+              <Redirect to='/home' />
+          }          
             
-            <Details
-              searchCounter={this.state.searchCounter}
-              isLoading={this.state.isLoading}
-              info={this.state.info}
-              reviews={this.state.reviews}    
-            />  
+          <Switch>
+            <Route
+              path='/home'
+              render={(props) =>
+              <Home
+                userLocation={this.state.searchParameters.location}
+                getAllData={this.getAllData}                
+                {...props}
+              />}
+            />
 
-          :null}
-
-        </header>
-      </div>
+            <Route
+              path='/restaurant'
+              render={(props) => 
+              <Restaurant
+                userLocation={this.state.searchParameters.location}
+                getAllData={this.getAllData}
+                info={this.state.info}
+                reviews={this.state.reviews}
+                clearDetails={this.clearDetails}
+                {...props}
+              />}
+            />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
