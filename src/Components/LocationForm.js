@@ -3,19 +3,17 @@ import '../App.css';
 
 class LocationForm extends Component {
   state = {
-    value: '',
-    locationIsSet: false
+    value: ''
   }
 
   handleValueChange = (e) => {
     this.setState({ value: e.target.value });
-    // this.setState({locationIsSet: false})
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.chooseRestaurant(this.state.value);
-    this.setState({locationIsSet:true})
+    this.props.getAllData(this.state.value);
+    // this.setState({locationIsSet:true})
   }
 
   render() {
@@ -30,7 +28,7 @@ class LocationForm extends Component {
         
         <input 
           type="submit"
-          value={this.state.locationIsSet? "Choose again!" : "Choose!"}
+          value={this.props.userLocation? "Choose again!" : "Choose!"}
         />
       </form>
     );
