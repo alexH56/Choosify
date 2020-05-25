@@ -12,7 +12,7 @@ class LocationForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.getAllData(this.state.value);
+    this.props.getRestaurant(this.state.value);
     // this.setState({locationIsSet:true})
   }
 
