@@ -21,7 +21,7 @@ class Restaurant extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.match.params.id !== prevProps.match.params.id) {
+    if (this.props.match.params.id !== prevProps.match.params.id && !this.props.reviews) {
       this.props.getInfo(this.props.match.params.id);
       this.props.getReviews(this.props.match.params.id);
     }
@@ -44,6 +44,7 @@ class Restaurant extends Component {
             ? <Info
               info={info}
               reviews={reviews}
+              pickRandom={this.props.pickRandom}
               match={this.props.match}
             />
 
