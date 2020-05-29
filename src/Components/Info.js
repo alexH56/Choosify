@@ -8,6 +8,28 @@ import {
   Link
 } from 'react-router-dom';
 
+import zero from '../Yelp_Stars/0.png';
+import one from '../Yelp_Stars/1.png';
+import onehalf from '../Yelp_Stars/1half.png';
+import two from '../Yelp_Stars/2.png';
+import twohalf from '../Yelp_Stars/2half.png';
+import three from '../Yelp_Stars/3.png';
+import threehalf from '../Yelp_Stars/3half.png';
+import four from '../Yelp_Stars/4.png';
+import fourhalf from '../Yelp_Stars/4half.png';
+import five from '../Yelp_Stars/5.png';
+
+import zeroLarge from '../Yelp_Stars/0-LG.png';
+import oneLarge from '../Yelp_Stars/1-LG.png';
+import onehalfLarge from '../Yelp_Stars/1half-LG.png';
+import twoLarge from '../Yelp_Stars/2-LG.png';
+import twohalfLarge from '../Yelp_Stars/2half-LG.png';
+import threeLarge from '../Yelp_Stars/3-LG.png';
+import threehalfLarge from '../Yelp_Stars/3half-LG.png';
+import fourLarge from '../Yelp_Stars/4-LG.png';
+import fourhalfLarge from '../Yelp_Stars/4half-LG.png';
+import fiveLarge from '../Yelp_Stars/5-LG.png';
+
 class Info extends Component {
   render () {
     const restaurant = this.props.info;
@@ -19,67 +41,67 @@ class Info extends Component {
     const stars = (rating, size) => {
       const icons = {
         0: function () {
-          return '../Yelp_Stars/0.png';
+          return zero;
         },
         1: function () {
-          return '../Yelp_Stars/1.png';
+          return one;
         },
         1.5: function () {
-          return '../Yelp_Stars/1half.png';
+          return onehalf;
         },
         2: function () {
-          return '../Yelp_Stars/2.png';
+          return two;
         },
         2.5: function () {
-          return '../Yelp_Stars/2half.png';
+          return twohalf;
         },
         3: function () {
-          return '../Yelp_Stars/3.png';
+          return three;
         },
         3.5: function () {
-          return '../Yelp_Stars/3half.png';
+          return threehalf;
         },
         4: function () {
-          return '../Yelp_Stars/4.png';
+          return four;
         },
         4.5: function () {
-          return '../Yelp_Stars/4half.png';
+          return fourhalf;
         },
         5: function () {
-          return '../Yelp_Stars/5.png';
+          return five;
         }
       };
 
       const iconsLG = {
         0: function () {
-          return '../Yelp_Stars/0-LG.png';
+          return zeroLarge;
         },
         1: function () {
-          return '../Yelp_Stars/1-LG.png';
+          return oneLarge;
         },
         1.5: function () {
-          return '../Yelp_Stars/1half-LG.png';
+          return onehalfLarge;
         },
         2: function () {
-          return '../Yelp_Stars/2-LG.png';
+          return twoLarge;
         },
         2.5: function () {
-          return '../Yelp_Stars/2half-LG.png';
+          return twohalfLarge;
         },
         3: function () {
-          return '../Yelp_Stars/3-LG.png';
+          return threeLarge;
         },
         3.5: function () {
-          return '../Yelp_Stars/3half-LG.png';
+          return threehalfLarge;
         },
         4: function () {
-          return '../Yelp_Stars/4-LG.png';
+          return fourLarge;
         },
         4.5: function () {
-          return '../Yelp_Stars/4half-LG.png';
+          return fourhalfLarge;
         },
         5: function () {
-          return '../Yelp_Stars/5-LG.png';
+          return fiveLarge;
         }
       };
 
@@ -143,7 +165,7 @@ class Info extends Component {
             <img src={restaurant.image_url} alt='image of restaurant' />
             <h3>
               <img src={stars(restaurant.rating, 'LG')} />
-              <span>{`${restaurant.review_count} Reviews`}</span>
+              <span>  {`${restaurant.review_count} Reviews`}</span>
             </h3>
             <h3>{`${restaurant.price}  ·  ${categories}`}</h3>
             <div className='hoursOfOperation'>
@@ -164,7 +186,6 @@ class Info extends Component {
               <h3><img src={stars(reviews[0].rating, 'SM')} /> - {reviews[0].user.name}</h3>
               <p>{reviews[0].text}</p>
               <Link to={`${this.props.match.url}/reviews`}>See more reviews</Link>
-              {/* <img src='../Yelp_Stars/0.png' alt='stars' /> */}
             </div>
           </div>
 
