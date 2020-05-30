@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import '../App.css';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-  Link
-} from 'react-router-dom';
+import '../App.scss';
+
 import loader from '../loader.svg';
 
 import Info from './Info';
@@ -32,26 +26,18 @@ class Restaurant extends Component {
     const reviews = this.props.reviews;
 
     return (
-      <div className='App'>
-        <header className='App-header'>
-
-          {/* <LocationForm
-            getAllData={this.props.getAllData}
-            userLocation={this.props.userLocation}
-          /> */}
-
-          {(reviews && info)
-            ? <Info
-              info={info}
-              reviews={reviews}
-              pickRandom={this.props.pickRandom}
-              match={this.props.match}
+      <main>
+        {(reviews && info)
+          ? <Info
+            info={info}
+            reviews={reviews}
+            match={this.props.match}
+            stars={this.props.stars}
             />
 
-            : <img src={loader} alt='loading' />}
+          : <img src={loader} alt='loading' />}
 
-        </header>
-      </div>
+      </main>
     );
   }
 }
