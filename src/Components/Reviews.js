@@ -1,40 +1,40 @@
 import React, { Component } from 'react';
-import '../App.css';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-  Link
-} from 'react-router-dom';
+import '../App.scss';
 import { PropTypes } from 'prop-types';
 
-class Reviews extends Component {
-//   componentDidMount () {
-//     const REVIEWS = this.props.reviewList.map(review => (
-//       review.text
-//     ));
-//     console.log(REVIEWS);
-//   }
+import logo from '../Yelp_Logo.svg';
 
+class Reviews extends Component {
   render () {
     const reviewList = this.props.reviewList;
-    return (
-      <div className='App'>
-        <header className='App-header'>
-          {/* <ul>
-            {reviewList.map(review => (
-              <li key={`${review.id}`}>
-                <p>{review.rating}</p>
-                <p>{review.text}</p>
-                <p>{review.time_created}</p>
-              </li>
-            ))}
-          </ul> */}
-          <p>Reviews</p>
-        </header>
+    const stars = this.props.stars;
+    const dateFormatter = date => `${date.slice(5, 10).replace('-', '/')}/${date.slice(2, 4)}`;
 
-      </div>
+    return (
+      <main>
+        <div className='info-container'>
+          {reviewList
+            ? reviewList.map(review => (
+              <article key={`${review.id}`}>
+                <div className='aligner'>
+                  <img src={stars(review.rating, 'SM')} alt='rating displayed in number of stars' />
+                  <h3>{review.user.name}  <span className='faded'>{dateFormatter(review.time_created)}</span></h3>
+                </div>
+                <p><i>"{review.text}</i>"</p>
+              </article>
+            ))
+
+            : null}
+        </div>
+
+        <div id='link'>
+          <a href={this.props.info.url}>More reviews on</a>
+          <a href={this.props.info.url}><img src={logo} alt='yelp logo' /></a>
+        </div>
+
+        <button className='btn' onClick={this.props.history.goBack}>Back</button>
+      </main>
+
     );
   }
 }
