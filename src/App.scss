@@ -1,0 +1,158 @@
+$myYellow: #f8b26a;
+$myRed: #e15b64;
+
+* {
+  box-sizing: border-box; 
+}
+body {
+  background-color: #282c34;
+}
+
+main {
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+ul {
+  padding: 0px;
+  list-style-type: none;
+  width: 100%;
+}
+
+li {
+  width: 100;
+}
+
+h1 {
+  margin-top: -.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: $myYellow
+}
+
+article h3 {
+  margin-top:none;
+}
+
+.App {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;  
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.banner {
+  font-size: calc(70px + 2vmin);
+  color:$myRed;
+  font-weight: bold;
+  background-color: $myYellow;
+  padding: 4vmin 1rem;
+  -webkit-text-stroke-width: .15rem;
+  -webkit-text-stroke-color: black;
+}
+
+.homeContainer {
+  width: 80%;
+  // margin-top: 5rem;
+}
+
+.info-container {
+  // background-color: lightsalmon;
+  width:70%;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  // margin-top: 5rem;
+}
+
+.main-img {
+ height: 18rem;
+ width: 18rem;
+}
+
+.aligner {
+  margin-top: 1rem;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.aligner img {
+  padding-right: 1rem;
+}
+
+.faded{
+  font-size: calc(8px + 2vmin);
+  color: lightgray;
+}
+
+.btn {
+  font-size: calc(10px + 2vmin);
+  height: 3rem;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  background-color: $myRed;
+  border-width: 0px;
+  outline: none;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  &:hover {
+    background-color: rgb(180, 0, 0);    
+  }
+}
+
+#hours {
+  margin-inline-end: 0px;
+  margin-block-end: 0px;
+  margin-bottom: .1rem;
+}
+
+#text {
+  font-size: calc(10px + 2vmin);
+  width: 50%;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  margin-right: 1rem;
+  height: 3rem;
+  border-radius: 10px;
+  border-width: 0px;
+  padding-left: 1rem;
+  outline: none;
+  &:focus {
+    border-width: .25rem;
+    border-color: $myRed;
+  }
+
+}
+
+#link {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#link a {
+ padding-right: .5rem;
+ color: white;
+}
+
+#link img {
+  height: 2rem;
+  width: 4rem;
+}
+
+#categories {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
