@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.70d03190.chunk.css",
+    "main.js": "/static/js/main.5e649a06.chunk.js",
+    "main.js.map": "/static/js/main.5e649a06.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f46143e1.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f46143e1.js.map",
+    "static/js/2.59ef5a41.chunk.js": "/static/js/2.59ef5a41.chunk.js",
+    "static/js/2.59ef5a41.chunk.js.map": "/static/js/2.59ef5a41.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.612367a0f6d6dc77551995a7ddf06fb5.js": "/precache-manifest.612367a0f6d6dc77551995a7ddf06fb5.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.70d03190.chunk.css.map": "/static/css/main.70d03190.chunk.css.map",
+    "static/js/2.59ef5a41.chunk.js.LICENSE.txt": "/static/js/2.59ef5a41.chunk.js.LICENSE.txt",
+    "static/media/Yelp_Logo.svg": "/static/media/Yelp_Logo.9db62033.svg",
+    "static/media/loader.svg": "/static/media/loader.f899c03a.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f46143e1.js",
+    "static/js/2.59ef5a41.chunk.js",
+    "static/css/main.70d03190.chunk.css",
+    "static/js/main.5e649a06.chunk.js"
+  ]
+}
