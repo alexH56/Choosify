@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+import '../App.scss';
 
 class LocationForm extends Component {
   state = {
@@ -13,13 +13,13 @@ class LocationForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.getRestaurant(this.state.value);
-    // this.setState({locationIsSet:true})
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input 
+      <form className="form" onSubmit={this.handleSubmit}>
+        <input
+          id='text' 
           type="text"
           value={this.state.value}
           onChange={this.handleValueChange}
@@ -27,6 +27,7 @@ class LocationForm extends Component {
         />
         
         <input 
+          className='btn'
           type="submit"
           value={this.props.userLocation? "Choose again!" : "Choose!"}
         />
