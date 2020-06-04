@@ -57,7 +57,7 @@ class App extends Component {
   getRestaurant = async (location) => {
     this.clearDetails();
     if(location !== this.state.searchParameters.location) {     // checks submission against current location to avoid unnecessary API calls
-      await this.setState(prevState => ({
+      this.setState(prevState => ({
           searchParameters: {
             ...prevState.searchParameters,
             location: location
@@ -73,7 +73,7 @@ class App extends Component {
 
     let fullRestaurantList = [];
 
-    for (let i = 0; i < this.state.numOfPages; i++) {     // loops to accumulate desired number of restaurants from multiple API calls
+    for (let i = 0; i < this.state.numOfPages; i++) {     // loops to accumulate desired number of restaurants (currently just list of 100) from multiple API calls
       await client.search(this.state.searchParameters)
       .then(res => {
         fullRestaurantList = fullRestaurantList.concat(res.jsonBody.businesses);
@@ -89,7 +89,7 @@ class App extends Component {
         console.log(`${err}`);
       });
     }
-    await this.setState({ searchResults: fullRestaurantList })
+    this.setState({ searchResults: fullRestaurantList })
     // console.log(fullRestaurantList)
   }
 
