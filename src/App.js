@@ -57,7 +57,7 @@ class App extends Component {
   getRestaurant = async (location) => {
     this.clearDetails();
     if(location !== this.state.searchParameters.location) {     // checks submission against current location to avoid unnecessary API calls
-      this.setState(prevState => ({
+      await this.setState(prevState => ({
           searchParameters: {
             ...prevState.searchParameters,
             location: location
@@ -89,7 +89,7 @@ class App extends Component {
         console.log(`${err}`);
       });
     }
-    this.setState({ searchResults: fullRestaurantList })
+    await this.setState({ searchResults: fullRestaurantList })
     // console.log(fullRestaurantList)
   }
 
@@ -97,7 +97,7 @@ class App extends Component {
     let restaurantList = this.state.searchResults;
     let theChosenOne = restaurantList[Math.floor(Math.random()*restaurantList.length)];
     console.log(theChosenOne.id)
-    this.setState({ chosenRestaurant : theChosenOne.id })
+    await this.setState({ chosenRestaurant : theChosenOne.id })
   }
 
   getInfo = async (restaurantID) => {     // retrieves detailed data for restaurant chosen by "pickRandom()"
